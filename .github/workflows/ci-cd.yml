@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - dev  # Adjust branch names as needed
+      - dev  # Adjust as needed
   pull_request:
     branches:
       - main
@@ -17,19 +17,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Debug File Structure
+        run: ls -R  # List files to verify structure
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install Dependencies
-        run: npm install  # Change to pip install if using Python
+        run: npm install
+        working-directory: ./Resource_Scheduler  # Adjust this if your project is in a subfolder
 
       - name: Run Tests
-        run: npm test  # Ensure you have test scripts
+        run: npm test
+        working-directory: ./Resource_Scheduler  # Adjust if necessary
 
       - name: Build Application
-        run: npm run build  # Modify this if using a different build process
+        run: npm run build
+        working-directory: ./Resource_Scheduler  # Adjust if necessary
 
   deploy:
     needs: build
