@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev  # Adjust branch names as needed
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install  # Change to pip install if using Python
+
+      - name: Run Tests
+        run: npm test  # Ensure you have test scripts
+
+      - name: Build Application
+        run: npm run build  # Modify this if using a different build process
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Application
+        run: |
+          echo "Deploying the app..."
+          # Add deployment steps (e.g., SSH into server, upload files, restart services)
